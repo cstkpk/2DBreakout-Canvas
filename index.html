@@ -84,23 +84,29 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 drawBall();
                 drawPaddle();
+                // To change the direction and color of the ball when it hits a wall
                 if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
                     dx = -dx;
-                    ballColor = '#'+Math.random().toString(16).substr(-6);
+                    ballColor = "#" + Math.random().toString(16).substr(-6);
                 }
-                if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+                if (y + dy < ballRadius) {
                     dy = -dy;
-                    ballColor = '#'+Math.random().toString(16).substr(-6);
+                    ballColor = "#" + Math.random().toString(16).substr(-6);
                 }
-
+                else if (y + dy > canvas.height - ballRadius) {
+                    alert ("GAME OVER");
+                    document.location.reload();
+                    clearInterval(interval);
+                }
+                // To add speed to paddle and make sure it doesn't run off the canvas
                 if (rightPressed) {
-                    paddleX += 7;
+                    paddleX += 6;
                     if (paddleX + paddleWidth > canvas.width) {
                         paddleX = canvas.width - paddleWidth;
                     }
                 }
                 else if (leftPressed) {
-                    paddleX -= 7;
+                    paddleX -= 6;
                     if (paddleX < 0) {
                         paddleX = 0;
                     }
@@ -110,7 +116,7 @@
                 y += dy;
             };
 
-            setInterval(draw, 10);
+            const interval = setInterval(draw, 10);
 
 
 
