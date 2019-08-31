@@ -94,7 +94,7 @@
                     ballColor = "#" + Math.random().toString(16).substr(-6);
                 }
                 else if (y + dy > canvas.height - ballRadius) {
-                    if (x > paddleX && x < paddleX + paddleWidth) {
+                    if (x > paddleX - 10 && x < paddleX + paddleWidth + 10) {
                         dy = -dy;
                     }
                     else {
