@@ -94,9 +94,14 @@
                     ballColor = "#" + Math.random().toString(16).substr(-6);
                 }
                 else if (y + dy > canvas.height - ballRadius) {
-                    alert ("GAME OVER");
-                    document.location.reload();
-                    clearInterval(interval);
+                    if (x > paddleX && x < paddleX + paddleWidth) {
+                        dy = -dy;
+                    }
+                    else {
+                        alert ("GAME OVER");
+                        document.location.reload();
+                        clearInterval(interval);
+                    }
                 }
                 // To add speed to paddle and make sure it doesn't run off the canvas
                 if (rightPressed) {
