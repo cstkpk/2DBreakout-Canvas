@@ -52,6 +52,8 @@
                     bricks[c][r] = {x: 0, y: 0, status: 1};
                 }
             }
+            // Score variables
+            let score = 0;
 
             // Key press handler functions
             const keyDownHandler = e => {
@@ -85,10 +87,23 @@
                             if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
                                 dy = -dy;
                                 b.status = 0;
+                                ballColor = "#" + Math.random().toString(16).substr(-6);
+                                score++;
+                                if (score === brickRowCount * brickColumnCount) {
+                                    alert("WE HAVE A WINNER!");
+                                    document.location.reload();
+                                    clearInterval(interval);
+                                }
                             }
                         }
                     }
                 }
+            }
+
+            const drawScore = () => {
+                ctx.font = "16px Arial";
+                ctx.fillStyle = "black";
+                ctx.fillText(`Score: ${score}`, 8, 20);
             }
 
             // Function to draw the ball
@@ -134,6 +149,7 @@
                 drawBricks();
                 drawBall();
                 drawPaddle();
+                drawScore();
                 collisionDetection();
                 // To change the direction and color of the ball when it hits a wall
                 if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
