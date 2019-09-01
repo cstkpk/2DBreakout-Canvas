@@ -76,6 +76,18 @@
             document.addEventListener("keydown", keyDownHandler, false);
             document.addEventListener("keyup", keyUpHandler, false);
 
+            // Collision detection helper function to detect whether the center of the ball is inside of a brick
+            const collisionDetection = () => {
+                for (let c = 0; c < brickColumnCount; c++) {
+                    for (let r = 0; r < brickRowCount; r++) {
+                        const b = bricks[c][r];
+                        if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
+                            dy = -dy;
+                        }
+                    }
+                }
+            }
+
             // Function to draw the ball
             const drawBall = () => {
                 ctx.beginPath();
@@ -117,6 +129,7 @@
                 drawBricks();
                 drawBall();
                 drawPaddle();
+                collisionDetection();
                 // To change the direction and color of the ball when it hits a wall
                 if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
                     dx = -dx;
