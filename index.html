@@ -74,9 +74,19 @@
                 };
             };
 
+            // Mouse control handler functions
+            const mouseMoveHandler = e => {
+                const relativeX = e.clientX - canvas.offsetLeft;
+                if (relativeX > 0 && relativeX < canvas.width) {
+                    paddleX = relativeX - paddleWidth / 2;
+                }
+            }
+
             // Event listeners for controlling the paddle left and right
             document.addEventListener("keydown", keyDownHandler, false);
             document.addEventListener("keyup", keyUpHandler, false);
+            // Event listener for controlling the paddle with mouse
+            document.addEventListener("mousemove", mouseMoveHandler, false);
 
             // Collision detection helper function to detect whether the center of the ball is inside of a brick
             const collisionDetection = () => {
@@ -90,7 +100,7 @@
                                 ballColor = "#" + Math.random().toString(16).substr(-6);
                                 score++;
                                 if (score === brickRowCount * brickColumnCount) {
-                                    alert("WE HAVE A WINNER!");
+                                    alert(`WE HAVE A WINNER! You got ${score} points.`);
                                     document.location.reload();
                                     clearInterval(interval);
                                 }
@@ -165,7 +175,7 @@
                         dy = -dy;
                     }
                     else {
-                        alert ("GAME OVER");
+                        alert (`GAME OVER. You got ${score} points.`);
                         document.location.reload();
                         clearInterval(interval);
                     }
