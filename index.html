@@ -54,6 +54,8 @@
             }
             // Score variables
             let score = 0;
+            // Lives variables
+            let lives = 3;
 
             // Key press handler functions
             const keyDownHandler = e => {
@@ -102,7 +104,6 @@
                                 if (score === brickRowCount * brickColumnCount) {
                                     alert(`WE HAVE A WINNER! You got ${score} points.`);
                                     document.location.reload();
-                                    clearInterval(interval);
                                 }
                             }
                         }
@@ -114,6 +115,12 @@
                 ctx.font = "16px Arial";
                 ctx.fillStyle = "black";
                 ctx.fillText(`Score: ${score}`, 8, 20);
+            }
+
+            const drawLives = () => {
+                ctx.font = "16px Arial";
+                ctx.fillStyle = "black";
+                ctx.fillText(`Lives: ${lives}`, canvas.width - 65, 20);
             }
 
             // Function to draw the ball
@@ -160,6 +167,7 @@
                 drawBall();
                 drawPaddle();
                 drawScore();
+                drawLives();
                 collisionDetection();
                 // To change the direction and color of the ball when it hits a wall
                 if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
@@ -175,9 +183,18 @@
                         dy = -dy;
                     }
                     else {
-                        alert (`GAME OVER. You got ${score} points.`);
-                        document.location.reload();
-                        clearInterval(interval);
+                        lives--;
+                        if (!lives) {
+                            alert(`Game over! You scored ${score} points`);
+                            document.location.reload();
+                        }
+                        else {
+                            x = canvas.width / 2;
+                            y = canvas.height - 30;
+                            dx = 2;
+                            dy = -2;
+                            paddleX = (canvas.width - paddleWidth) / 2;
+                        }
                     }
                 }
                 // To add speed to paddle and make sure it doesn't run off the canvas
@@ -196,9 +213,10 @@
 
                 x += dx;
                 y += dy;
+                requestAnimationFrame(draw);
             };
 
-            const interval = setInterval(draw, 10);
+            draw();
 
 
 
