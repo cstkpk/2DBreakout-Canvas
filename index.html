@@ -56,6 +56,8 @@
             let score = 0;
             // Lives variables
             let lives = 3;
+            // Waiting for key press variables
+            // let waitEnter = true;
 
             // Key press handler functions
             const keyDownHandler = e => {
@@ -80,7 +82,7 @@
             const mouseMoveHandler = e => {
                 const relativeX = e.clientX - canvas.offsetLeft;
                 if (relativeX > 0 && relativeX < canvas.width) {
-                    paddleX = (relativeX - 37) - (paddleWidth / 2 + 37);
+                    paddleX = relativeX - paddleWidth / 2;
                 }
             }
 
@@ -213,7 +215,9 @@
 
                 x += dx;
                 y += dy;
-                requestAnimationFrame(draw);
+                // if (waitEnter) {
+                    requestAnimationFrame(draw);
+                // }
             };
 
             draw();
