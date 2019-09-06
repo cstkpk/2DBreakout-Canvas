@@ -57,15 +57,28 @@
             // Lives variables
             let lives = 3;
             // Waiting for key press variables
-            // let waitEnter = true;
+            let waitEnter = 0;
+
+            const pauseToStart = () => {
+                if (waitEnter === 1) {
+                    waitEnter === 2;
+                    draw();
+                }
+            }
 
             // Key press handler functions
             const keyDownHandler = e => {
                 if (e.key == "Right" || e.key == "ArrowRight") {
                     rightPressed = true;
+                    if (waitEnter === 0) {
+                        waitEnter = 1;
+                        pauseToStart();
+                        console.log("Key down right true");
+                    }
                 }
                 else if (e.key == "Left" || e.key == "ArrowLeft") {
                     leftPressed = true;
+                    // waitEnter = true;
                 };
             };
 
@@ -215,9 +228,10 @@
 
                 x += dx;
                 y += dy;
-                // if (waitEnter) {
+                if (waitEnter === 1 || waitEnter === 2) {
                     requestAnimationFrame(draw);
-                // }
+                    // console.log("request animation frame");
+                }
             };
 
             draw();
