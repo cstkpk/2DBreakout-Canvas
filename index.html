@@ -57,29 +57,23 @@
             // Lives variables
             let lives = 3;
             // Waiting for key press variables
-            let waitEnter = 0;
-
-            const pauseToStart = () => {
-                if (waitEnter === 1) {
-                    waitEnter === 2;
-                    draw();
-                }
-            }
+            let waitEnter = false;
 
             // Key press handler functions
             const keyDownHandler = e => {
                 if (e.key == "Right" || e.key == "ArrowRight") {
                     rightPressed = true;
-                    if (waitEnter === 0) {
-                        waitEnter = 1;
-                        pauseToStart();
-                        console.log("Key down right true");
-                    }
                 }
                 else if (e.key == "Left" || e.key == "ArrowLeft") {
                     leftPressed = true;
-                    // waitEnter = true;
                 };
+                // When enter key is pressed, change waitEnter value from false to true and call the draw function to start animation
+                if (e.key === "Enter") {
+                    if (waitEnter === false) {
+                        waitEnter = true;
+                        draw();
+                    }
+                }
             };
 
             const keyUpHandler = e => {
@@ -99,7 +93,7 @@
                 }
             }
 
-            // Event listeners for controlling the paddle left and right
+            // Event listeners for controlling the paddle left and right && starts game on enter
             document.addEventListener("keydown", keyDownHandler, false);
             document.addEventListener("keyup", keyUpHandler, false);
             // Event listener for controlling the paddle with mouse
@@ -228,9 +222,9 @@
 
                 x += dx;
                 y += dy;
-                if (waitEnter === 1 || waitEnter === 2) {
+                // If waitEnter is true, start the game's animation
+                if (waitEnter) {
                     requestAnimationFrame(draw);
-                    // console.log("request animation frame");
                 }
             };
 
