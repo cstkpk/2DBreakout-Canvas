@@ -56,8 +56,9 @@
             let score = 0;
             // Lives variables
             let lives = 3;
-            // Waiting for key press variables
+            // Game control variables
             let waitEnter = false;
+            let introText = true;
 
             // Key press handler functions
             const keyDownHandler = e => {
@@ -71,6 +72,7 @@
                 if (e.key === "Enter") {
                     if (waitEnter === false) {
                         waitEnter = true;
+                        introText = false;
                         draw();
                     }
                 }
@@ -117,6 +119,14 @@
                             }
                         }
                     }
+                }
+            }
+
+            const drawIntro = () => {
+                if (introText) {
+                    ctx.font = "30px Arial";
+                    ctx.fillStyle = "black";
+                    ctx.fillText(`Press ENTER to start`, 95, canvas.height/2);
                 }
             }
 
@@ -177,6 +187,7 @@
                 drawPaddle();
                 drawScore();
                 drawLives();
+                drawIntro();
                 collisionDetection();
                 // To change the direction and color of the ball when it hits a wall
                 if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
